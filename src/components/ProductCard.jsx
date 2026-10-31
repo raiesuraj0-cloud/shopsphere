@@ -1,0 +1,11 @@
+import { Heart, ShoppingBag, Star } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
+export default function ProductCard({product}) {
+ const {addToCart}=useCart(); const {wishlist,toggleWishlist}=useWishlist(); const saved=wishlist.some(x=>x.id===product.id)
+ return <article className="card product-card" style={{textAlign:'left'}}>
+  <div style={{position:'relative',overflow:'hidden',background:'#f4f6f4'}}><Link to={`/product/${product.id}`}><img src={product.image} alt={product.name} style={{width:'100%',aspectRatio:'1/1.05',objectFit:'cover',transition:'transform .35s'}}/></Link><button onClick={()=>toggleWishlist(product)} aria-label="Toggle wishlist" style={{position:'absolute',right:12,top:12}} className="icon-btn"><Heart size={18} fill={saved?'#173f2d':'none'} color={saved?'#173f2d':'#657168'}/></button>{product.originalPrice&&<span className="badge" style={{position:'absolute',left:12,top:12,background:'#fff',color:'#173f2d'}}>Sale</span>}</div>
+  <div style={{padding:'16px'}}><p style={{fontSize:12,color:'#879087',margin:'0 0 5px'}}>{product.category}</p><Link to={`/product/${product.id}`} style={{textDecoration:'none',color:'#17211b',fontWeight:800}}><h3 style={{fontSize:16,margin:'0 0 8px'}} className="line-clamp">{product.name}</h3></Link><div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}><div><span style={{fontWeight:900,color:'#173f2d'}}>${product.price.toFixed(2)}</span>{product.originalPrice&&<span style={{marginLeft:8,fontSize:13,color:'#9aa29d',textDecoration:'line-through'}}>${product.originalPrice.toFixed(2)}</span>}</div><span style={{display:'flex',alignItems:'center',gap:3,fontSize:12}}><Star size={14} fill="#d68a3a" color="#d68a3a"/> {product.rating}</span></div><button onClick={()=>addToCart(product)} className="btn btn-dark" style={{width:'100%',marginTop:14,padding:'.65rem'}}><ShoppingBag size={16}/> Add to cart</button></div>
+ </article>
+}

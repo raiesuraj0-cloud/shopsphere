@@ -1,0 +1,2 @@
+import ProductCard from './ProductCard'
+export default function ProductGrid({products,columns=4}){return <div style={{display:'grid',gridTemplateColumns:`repeat(${columns},1fr)`,gap:18}}>{products.map(product=><ProductCard key={product.id} product={product}/>)}<style>{`@media(max-width:800px){div{grid-template-columns:repeat(2,1fr)!important}}`}</style></div>}
